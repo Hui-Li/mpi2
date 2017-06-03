@@ -35,21 +35,43 @@ all dependencies can be installed without administrator rights.
             #define BOOST_MPI_HOMOGENEOUS
 	  - run ./b2 -j4 install          (here -j4 means "use 4 cores")
 
-4. Install the log4cxx library. 
+4. Install Apache Runtime Project
+  a) Download APR from https://apr.apache.org/download.cgi
+      - unpack to somewhere and cd to this directory
+      - run ./configure --prefix=/home/<your-login>/local
+      - run make
+      - run make install
+  b) Download APR-util from https://apr.apache.org/download.cgi
+      - unpack to somewhere and cd to this directory
+      - run ./configure --prefix=/home/<your-login>/local --with-apr=/home/<your-login>/local
+      - run make
+      - run make install
+
+5. Install the log4cxx library. 
 	a) Use a package from your distribution (log4cxx & log4cxx-dev OR liblog4cxx10 & liblog4cxx10-dev)
 	b) Download source code from http://logging.apache.org/log4cxx/download.html
        and perform the following steps:
        - unpack to ~/local/src/apache-log4cxx-0.10.0
-       - run ./configure --prefix=/home/<your-login>/local
+       - run ./configure --prefix=/home/<your-login>/local --with-apr=/home/<your-login>/local --with-apr-util=/home/<your-login>/local
        - run make               (if this fails, see TROUBLESHOOTING below)
        - run make install
 
 	
-5. Install ccache
-   - Use a package from your distribution (ccache)   
+6. Install ccache
+   a) Use a package from your distribution (ccache)   
+   b) Download source code from https://ccache.samba.org/
+     - unpack to somewhere and cd to this directory
+     - run ./configure --prefix=/home/<your-login>/local
+     - run make
+     - run make install
+     - add the followings to your .bashrc:
+       export CCACHE_DIR=/home/<your-login>/.ccache
+       export CCACHE_TEMPDIR=/home/<your-login>/.ccache
+       export PATH=/home/<your-login>/local/bin:$PATH
+     - run source ~/.bashrc
 
-6a) To install to ~/local, first "mkdir build" and run then "./localinstall.sh" (most users do this, no root login required)
-6b) To build, Cd to <mf-root>/build, then run
+7a) To install to ~/local, first "mkdir build" and run then "./localinstall.sh" (most users do this, no root login required)
+7b) To build, Cd to <mf-root>/build, then run
     - For optimized build (default; release with CPU-specific optimizations): cmake -DCMAKE_BUILD_TYPE=NativeRelease ../
     - For generic release (release without CPU-specific optimizations): cmake -DCMAKE_BUILD_TYPE=Release ../
     - For development (never use to measure runtime!): cmake -DCMAKE_BUILD_TYPE=Debug ../
@@ -57,9 +79,9 @@ all dependencies can be installed without administrator rights.
 
     After the build is successful, the project can be imported into Eclipse
     (project file is in root directory).
-6c) To install for all users, build and then do "make install" as root
+7c) To install for all users, build and then do "make install" as root
 
-7. (Optionally) Run doxygen in the main directory to create documentation files.   
+8. (Optionally) Run doxygen in the main directory to create documentation files.   
    
    
    
